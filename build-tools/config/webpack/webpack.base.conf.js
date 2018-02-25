@@ -56,7 +56,11 @@ module.exports = {
         test: /\.svg$/,
         use: [
           {
-            loader: 'svg-inline-loader',
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: path.posix.join(config.build.versionPath, 'image/[name].[hash:7].[ext]'),
+            },
           },
           {
             loader: 'svgo-loader',
