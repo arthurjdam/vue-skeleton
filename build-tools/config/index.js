@@ -23,18 +23,7 @@ if (!publicPath.endsWith('/')) {
   publicPath = `${publicPath}/`;
 }
 
-/*
-It's also possible to override the version number during a build.
-
-yarn build -- --versionNumber=v1
- */
-let version = new Date().getTime();
-
-if(argv.versionNumber){
-  version = argv.versionNumber;
-}
-
-const versionPath = 'version/' + version + '/';
+const versionPath = 'asset/';
 
 let analyze = false;
 
