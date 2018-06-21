@@ -92,6 +92,7 @@
     "pem": "^1.12.5",
     "pify": "^3.0.0",
     "postcss-loader": "^2.1.2",
+    "prerender-spa-plugin": "^3.2.1",
     "prettier": "^1.5.2",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.2",

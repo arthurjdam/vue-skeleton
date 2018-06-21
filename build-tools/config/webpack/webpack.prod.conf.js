@@ -14,6 +14,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const PrerenderSPAPlugin = require('prerender-spa-plugin');
 
 const env = config.build.env;
 const projectRoot = path.resolve(__dirname, '../../../');
@@ -79,7 +80,9 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new WebpackCleanupPlugin(),
+    new WebpackCleanupPlugin({
+      exclude: [ '**/index.html' ]
+    }),
     new webpack.DefinePlugin({
       'process.env': env,
     }),
@@ -127,6 +130,17 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.gitkeep'],
       },
     ]),
+    new PrerenderSPAPlugin({
+      staticDir: path.resolve(__dirname, '../../../dist'),
+      routes: [ //update to auto-propagate correct paths
+        '/',
+        '/about/',
+      ],
+      postProcess (renderedRoute) {
+        // optional stuff, i.e. add CSP nonce or sha-sum to <script tags
+        return renderedRoute;
+      }
+    }),
     ...(config.build.analyze ? (
       [
         new BundleAnalyzerPlugin({
